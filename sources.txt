@@ -1,6 +1,6 @@
 Useful links:
 
-1) "The Universal Sports Database" -- Lawrence Chang:
+1)	"The Universal Sports Database" -- Lawrence Chang:
 		23 page paper describing a possible implementation of a universal 
 		sports database, including the data scraping, engineering, and 
 		possible schemas and implementations.
