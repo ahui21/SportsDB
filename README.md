@@ -14,6 +14,6 @@ Dependencies:	TBD
 
 Folders:
 	- WebScraper:	programs used to scrape the data used
-	- Database:	database management system
-	- Website:	code used to create the user interface (web app)
-	- Query:	code for query management
+	- Database:		database management system
+	- Website:		code used to create the user interface (web app)
+	- Query:		code for query management
