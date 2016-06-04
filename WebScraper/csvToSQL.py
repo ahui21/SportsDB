@@ -2,6 +2,7 @@
 # TODO: include alternatives for double, integer, and string
 
 
+
 import sys
 import csv
 import os
@@ -77,7 +78,7 @@ def parse_csv():
                 digits1 = int(raw_input('How many digits before the decimal to be allocated? '))
                 digits2 = int(raw_input('How many digits after the decimal to be allocated? '))
 
-                dataType = 'NUMERIC(' + str(digits1) + ',' + str(digits2) + ') '
+                dataType = 'NUMERIC(' + str(digits1 + digits2) + ',' + str(digits2) + ') '
 
                 typeStringRepeat = False
 
@@ -149,6 +150,10 @@ def create_SQL():
                 counter = counter + 1
 
     sqlFile = open(sqlFileName, 'w+')
+
+    sqlFile.write('/* SQL statements automatically generated from ' + fileName + ' */')
+    sqlFile.write('\n')
+    sqlFile.write('\n')
 
     if dropTable:
         sqlFile.write('DROP TABLE IF EXISTS ' + tableName + ';')
