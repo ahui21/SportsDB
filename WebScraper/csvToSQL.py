@@ -1,4 +1,6 @@
 # TODO: find alternative if table is not to be dropped and should be updated instead
+# TODO: include alternatives for double, integer, and string
+
 
 import sys
 import csv
@@ -125,7 +127,7 @@ def create_SQL():
     global dataTypes
     global data
 
-    sqlFileName = fileName[:fileName.index('.')] + '.sql'
+    sqlFileName = fileName[:fileName.index('.')] + '_dump.sql'
 
     replaceExistingFile = False
 
