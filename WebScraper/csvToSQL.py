@@ -1,7 +1,9 @@
 # TODO: find alternative if table is not to be dropped and should be updated instead
 # TODO: include alternatives for double, integer, and string
 
-
+# A Python program that takes in a command-line argument of a csv file and then converts it into a SQL dump file.
+# Written by: Alwin Hui (ahui21)
+# Created: June 2nd, 2016
 
 import sys
 import csv
