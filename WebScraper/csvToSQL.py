@@ -1,11 +1,9 @@
-# TODO: find alternative if table is not to be dropped and should be updated
-#       instead
+# TODO: find alternative if table is not to be dropped and should be updated instead
 # TODO: include alternatives for double, integer, and string
 # TODO: automate data type selections for each
 # TODO: check if fields match data types given
 
-# Description:  A Python program that takes in a command-line argument of a csv
-#               file and then converts it into a SQL dump file.
+# Description:  A Python program that takes in a command-line argument of a csv file and then converts it into a SQL dump file.
 # Written by:   Alwin Hui (ahui21)
 # Created:      June 2nd, 2016
 
@@ -29,29 +27,24 @@ def parse_args():
     if len(sys.argv) == 2:
         fileName = sys.argv[1]
     else:
-        raise ValueError('Incorrect number of arguments (%i) found.' %
-                         len(sys.argv))
+        raise ValueError('Incorrect number of arguments (%i) found.' % len(sys.argv))
 
 
 def parse_inputs():
     global tableName
     global dropTable
 
-    tableName = (str(raw_input('\nEnter the name of the '
-                               'table: '))).replace(" ", "_")
+    tableName = (str(raw_input('\nEnter the name of the table: '))).replace(" ", "_")
 
     dropTableRepeat = True
 
     while dropTableRepeat:
-        dropTableString = str(raw_input('If this table already exists, shall '
-                                        'we drop it? '))
+        dropTableString = str(raw_input('If this table already exists, shall we drop it? '))
 
-        if dropTableString == 'Yes' or dropTableString == 'Y'
-        or dropTableString == 'yes' or dropTableString == 'y':
+        if dropTableString == 'Yes' or dropTableString == 'Y' or dropTableString == 'yes' or dropTableString == 'y':
             dropTable = True
             dropTableRepeat = False
-        elif dropTableString == 'No' or dropTableString == 'N'
-        or dropTableString == 'no' or dropTableString == 'n':
+        elif dropTableString == 'No' or dropTableString == 'N' or dropTableString == 'no' or dropTableString == 'n':
             dropTableRepeat = False
 
 
@@ -93,30 +86,23 @@ def parse_csv():
         dataType = ''
 
         while typeStringRepeat:
-            typeString = str(raw_input('What type of variable is \"' +
-                                       data[i][0] + '\" (double, integer, '
-                                       'string, other)? '))
+            typeString = str(raw_input('What type of variable is \"' + data[i][0] + '\" (double, integer, string, other)? '))
 
             if typeString == 'double' or typeString == 'Double':
-                digits1 = int(raw_input('How many digits before the decimal to'
-                                        ' be allocated? '))
-                digits2 = int(raw_input('How many digits after the decimal to '
-                                        'be allocated? '))
+                digits1 = int(raw_input('How many digits before the decimal to be allocated? '))
+                digits2 = int(raw_input('How many digits after the decimal to be allocated? '))
 
-                dataType = ('NUMERIC(' + str(digits1 + digits2) + ',' +
-                            str(digits2) + ') ')
+                dataType = ('NUMERIC(' + str(digits1 + digits2) + ',' + str(digits2) + ') ')
 
                 typeStringRepeat = False
 
-            elif typeString == 'integer' or typeString == 'Integer'
-            or typeString == 'int' or typeString == 'Int':
+            elif typeString == 'integer' or typeString == 'Integer' or typeString == 'int' or typeString == 'Int':
                 dataType = 'INTEGER '
 
                 typeStringRepeat = False
 
             elif typeString == 'string' or typeString == 'String':
-                chars = int(raw_input('How many characters to be '
-                                      'allocated? '))
+                chars = int(raw_input('How many characters to be allocated? '))
 
                 dataType = 'VARCHAR(' + str(chars) + ') '
 
@@ -132,11 +118,9 @@ def parse_csv():
                 while nullRepeat:
                     null = str(raw_input('Can this field be null? '))
 
-                    if null == 'Yes' or null == 'Y' or null == 'yes'
-                    or null == 'y':
+                    if null == 'Yes' or null == 'Y' or null == 'yes' or null == 'y':
                         nullRepeat = False
-                    elif null == 'No' or null == 'N' or null == 'no'
-                    or null == 'n':
+                    elif null == 'No' or null == 'N' or null == 'no' or null == 'n':
                         dataType = dataType + ' NOT NULL'
                         nullRepeat = False
 
@@ -181,8 +165,7 @@ def create_SQL():
 
     condensedFileName = fileName[fileName.rfind('/') + 1:]
 
-    sqlFileName = (condensedFileName[:condensedFileName.rfind('.')] +
-                   '_dump.sql')
+    sqlFileName = (condensedFileName[:condensedFileName.rfind('.')] + '_dump.sql')
 
     replaceExistingFile = False
 
@@ -193,30 +176,19 @@ def create_SQL():
         replaceExistingFileRepeat = True
 
         while replaceExistingFileRepeat:
-            replaceExistingFileString = str(raw_input('File ' + sqlFileName +
-                                                      ' currently exists. '
-                                                      'Replace current '
-                                                      'file? '))
+            replaceExistingFileString = str(raw_input('File ' + sqlFileName + ' currently exists. Replace current file? '))
 
-            if replaceExistingFileString == 'Yes'
-            or replaceExistingFileString == 'Y'
-            or replaceExistingFileString == 'yes'
-            or replaceExistingFileString == 'y':
+            if replaceExistingFileString == 'Yes' or replaceExistingFileString == 'Y' or replaceExistingFileString == 'yes' or replaceExistingFileString == 'y':
                 replaceExistingFile = True
                 replaceExistingFileRepeat = False
-            elif replaceExistingFileString == 'No'
-            or replaceExistingFileString == 'N'
-            or replaceExistingFileString == 'no'
-            or replaceExistingFileString == 'n':
+            elif replaceExistingFileString == 'No' or replaceExistingFileString == 'N' or replaceExistingFileString == 'no' or replaceExistingFileString == 'n':
                 replaceExistingFileRepeat = False
-                sqlFileName = (sqlFileName[:sqlFileName.index('.')] +
-                               str(counter) + '.sql')
+                sqlFileName = (sqlFileName[:sqlFileName.index('.')] + str(counter) + '.sql')
                 counter = counter + 1
 
     sqlFile = open(sqlFileName, 'w+')
 
-    sqlFile.write('/* SQL statements automatically generated from ' +
-                  condensedFileName + ' */')
+    sqlFile.write('/* SQL statements automatically generated from ' + condensedFileName + ' */')
     sqlFile.write('\n')
     sqlFile.write('\n')
 
@@ -276,14 +248,11 @@ def create_SQL():
                 else:
                     empty = False
 
-                # if data[j][i] includes a single quotation mark, double up on
-                # the single quote
+                # if data[j][i] includes a single quotation mark, double up on the single quote
                 toBeEntered = data[j][i]
 
                 if '\'' in data[j][i]:
-                    toBeEntered = (toBeEntered[:toBeEntered.index('\'')] +
-                                   '\'' +
-                                   toBeEntered[toBeEntered.index('\''):])
+                    toBeEntered = (toBeEntered[:toBeEntered.index('\'')] + '\'' + toBeEntered[toBeEntered.index('\''):])
 
                 if firstTime:
                     if empty:
