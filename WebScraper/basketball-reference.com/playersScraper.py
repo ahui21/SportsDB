@@ -1,5 +1,6 @@
 from lxml import html
 import requests
+import os
 
 webURL = 'http://www.basketball-reference.com/players/'
 alphabet = []
@@ -92,7 +93,9 @@ def scraper_individual(firstLetter):
 
 
 def convert_to_CSV():
-    fileName = str(raw_input('What should we title this CSV file? '))
+    global players
+
+    fileName = str(raw_input('What should we title this CSV file? ')) + '.csv'
 
     replaceExistingFile = False
 
@@ -115,16 +118,23 @@ def convert_to_CSV():
 
     file = open(fileName, 'w+')
 
-    for i in players:
+    for i in range(len(players[0])):
         line = ''
         firstTime = True
 
-        for j in i:
+        for j in range(len(players)):
+            toInsert = ''
+
+            if ',' in str(players[j][i]):
+                toInsert = "\"" + str(players[j][i]) + "\""
+            else:
+                toInsert = str(players[j][i])
+
             if firstTime:
-                line = players[i][j]
+                line = toInsert
                 firstTime = False
             else:
-                line = line + ',' + players[i][j]
+                line = line + ',' + toInsert
 
         file.write(line)
         file.write('\n')
@@ -132,6 +142,7 @@ def convert_to_CSV():
 
 def main():
     scraper_main()
+    convert_to_CSV()
 
 
 if __name__ == '__main__':

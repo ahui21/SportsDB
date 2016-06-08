@@ -2,6 +2,7 @@
 # TODO: include alternatives for double, integer, and string
 # TODO: automate data type selections for each
 # TODO: check if fields match data types given
+# TODO: check if fields that user says are not null do not have empty fields
 
 # Description:  A Python program that takes in a command-line argument of a csv file and then converts it into a SQL dump file.
 # Written by:   Alwin Hui (ahui21)
@@ -126,9 +127,8 @@ def parse_csv():
 
             print ''
 
-    column_name_cleanup()
+        data[i][0] = column_name_cleanup(data[i][0])
 
-    for i in range(len(data)):
         spaces = ''
 
         for j in range(longestLength - len(data[i][0]) + 1):
@@ -137,22 +137,21 @@ def parse_csv():
         dataTypes.append(data[i][0] + spaces + dataType)
 
 
-def column_name_cleanup():
-    global data
+def column_name_cleanup(column_name):
 
     # if column names match reserved keywords, modify them slightly
-    for i in range(len(data)):
-        if data[i][0] in reservedKeywords:
-            data[i][0] = data[i][0] + '_'
+    if column_name in reservedKeywords:
+        column_name = column_name + '_'
 
     # modify column names to PascalCase
-    for i in range(len(data)):
-        finalColumnName = ''
+    finalColumnName = ''
 
-        for j in data[i][0].split():
-            finalColumnName = finalColumnName + j.capitalize()
+    for j in column_name.split():
+        finalColumnName = finalColumnName + j.capitalize()
 
-        data[i][0] = finalColumnName
+    column_name = finalColumnName
+
+    return column_name
 
 
 def create_SQL():
