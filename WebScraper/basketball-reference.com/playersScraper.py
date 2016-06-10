@@ -5,9 +5,9 @@ import os
 webURL = 'http://www.basketball-reference.com/players/'
 alphabet = []
 
-# players has 10 columns (player name, from, to, position, height, weight,
-#                         birth date, college, currently active, hall of fame)
+# players has 10 columns (player name, from, to, position, height, weight, birth date, college, currently active, hall of fame, link to webpage)
 players = [[],
+           [],
            [],
            [],
            [],
@@ -26,8 +26,10 @@ def scraper_main():
 
     scraper_alphabet()
 
-    for i in alphabet:
-        scraper_individual(i)
+    #for i in alphabet:
+    #    scraper_individual(i)
+
+    scraper_individual('a')
 
 
 def scraper_alphabet():
@@ -46,6 +48,7 @@ def scraper_individual(firstLetter):
     global playersHeader
 
     newWebURL = webURL + firstLetter.lower()
+    curPage = webURL[webURL.index('.com') + 4:]
 
     page = requests.get(newWebURL)
     tree = html.fromstring(page.content)
@@ -54,11 +57,20 @@ def scraper_individual(firstLetter):
         header = [th.text_content() for th in table.xpath('//th')]
         data = [[td for td in tr.xpath('td')] for tr in table.xpath('//tr')]
 
+        for tr in table.xpath('//tr'):
+            for td in tr.xpath('td'):
+                print td.text_content()
+                bolded_text = td.xpath('//strong//a/text()')
+                for i in bolded_text:
+                    print i.text_content()
+
         bolded_Text = data[1][0].xpath('//strong//a/text()')
+
+        link = data[1][0].xpath('//a/@href')
+        link[:] = [url for url in link if (curPage in url) and (len(url) - len(curPage) > 2)]
 
         for i in range(len(data)):
             for j in range(len(data[i])):
-
                 data[i][j] = data[i][j].text_content()
 
         data = [row for row in data if len(row) == len(header)]
@@ -69,8 +81,11 @@ def scraper_individual(firstLetter):
 
             players[8] = ['Active']
             players[9] = ['Hall Of Fame']
+            players[10] = ['Webpage Link']
 
             playersHeader = True
+
+        counter = 0
 
         for i in data:
             for j in range(len(header)):
@@ -88,6 +103,10 @@ def scraper_individual(firstLetter):
                         players[8].append(True)
                     else:
                         players[8].append(False)
+
+                    # add link to webpage
+                    players[10].append(link[counter])
+                    counter = counter + 1
 
                 players[j].append(i[j])
 
