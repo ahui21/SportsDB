@@ -6,10 +6,15 @@ accessible and useful format to users.
 
 ## Details
 First created:  May 30, 2016
+
 Last edited:    May 30, 2016
+
 Version:        1.0
+
 Written by:     Alwin Hui (ahui21)
+
 Licensing:      TBD
+
 Dependencies:   TBD
 
 ## Folders
